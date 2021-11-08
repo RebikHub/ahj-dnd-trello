@@ -4,93 +4,97 @@
 }
 
 body {
-    color: #999;
+    color: rgb(88, 88, 88);
 }
 
-#gallery {
-
-}
-
-.images-list {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.form-widget {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: 200px;
-    margin: auto;
-    border: 1px solid #999;
-    border-radius: 30px;
-}
-
-.lable-name {
-    margin: 35px 20px 0px 20px;
-}
-
-.lable-src {
-    margin: 20px 20px 20px 20px;
-}
-
-.input-name{
-    width: 253px;
-    margin-left: 139px;
-}
-
-.input-src {
-    width: 253px;
-    margin-left: 40px;
-}
-
-.button {
-    width: 100px;
-    height: 30px;
-    border-style: none;
-    border-radius: 20px;
-    margin-top: 30px;
+#container {
+    max-width: 800px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.image {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin-left: 30px;
-    margin-top: 40px;
-    border: 1px solid #999;
-    background-size: cover;
-}
-
-.close-image {
-    position: absolute;
-    z-index: 1;
-    left: 90px;
-    top: -10px;
-    display: block;
-    border: 1px solid #999;
-    border-radius: 20px;
-    width: 20px;
-    height: 20px;
-    background-image: url('../img/cross.png');
-    background-size: cover;
-}
-
-img {
-    width: inherit;
-    height: inherit;
-}
-
-.error {
-    position: fixed;
-    top: 100px;
-    left: 410px;
-    font-size: 12px;
-    display: none;
-    background: black;
+.todo, .progress, .done {
+    width: 250px;
+    background-color: rgb(77, 200, 231);
     padding: 5px;
     border-radius: 5px;
-    color: #fff;
+    height: fit-content;
+}
+
+.add-card {
+    font-size: large;
+    color: rgb(88, 88, 88);
+    text-decoration: none;
+    padding-left: 5px;
+}
+
+.title {
+    padding-left: 10px;
+}
+
+.none {
+    display: none;
+}
+
+.todo-in, .progress-in, .done-in {
+
+}
+
+.card-block {
+    width: 100%;
+}
+
+.card-text {
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-block {
+    display: flex;
+}
+
+.btn-add {
+    width: 80px;
+    height: 30px;
+    background-color: rgb(142 246 192);
+    border-radius: 5px;
+    border-style: none;
+}
+
+.btn-remove {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    background-position: center;
+    background-image: url(../img/remove.png);
+    border-style: none;
+    background-color: rgb(77, 200, 231);
+}
+
+.new-div {
+    position: relative;
+    background-color: white;
+    min-height: 20px;
+    word-wrap: break-word;
+    padding: 5px 27px 5px 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.new-div::before {
+    content: "\E951";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    color: rgb(88, 88, 88);
+    background-color: rgb(174 174 174);
+    right: 5px;
 }

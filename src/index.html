@@ -7,18 +7,29 @@
   <title>Document</title>
 </head>
 <body>
-  <div id="gallery">
-    <div class="error">Неверный URL изображения</div>
-    <form action="" class="form-widget">
-      <label class="lable-name">Название<input type="text" class="input-name" required></label>
-      <label class="lable-src">Ссылка на изображение<input type="text" class="input-src" required></label>
-      <button type="button" class="button">Добавить</button>
-    </form>
-    <div class="images-list">
-      <!-- <div class="image">
-        <img src="https://cdn-icons-png.flaticon.com/128/3089/3089803.png" alt="">
-        <span class="close-image"></span>
-      </div> -->
+  <div id="container">
+    <div class="todo">
+      <h4 class="title">TODO</h4>
+      <div class="todo-in"></div>
+      <a href="" class="add-card">+ Add another card</a>
+    </div>
+    <div class="progress">
+      <h4 class="title">IN PROGRESS</h4>
+      <div class="progress-in"></div>
+      <a href="" class="add-card">+ Add another card</a>
+    </div>
+    <div class="done">
+      <h4 class="title">DONE</h4>
+      <div class="done-in"></div>
+      <a href="" class="add-card">+ Add another card</a>
+    </div>
+  </div>
+
+  <div class="card-block none">
+    <textarea class="card-text" placeholder="Enter a title for this card..." required></textarea>
+    <div class="btn-block">
+      <button type="button" class="btn-add">Add Card</button>
+      <button type="button" class="btn-remove"></button>
     </div>
   </div>
 </body>

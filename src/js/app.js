@@ -1,9 +1,9 @@
-import Gallery from './gallery';
+import Trello from './trello';
 
 console.log('app started');
 
-const inputName = document.querySelector('.input-name');
-const inputSrc = document.querySelector('.input-src');
-const gallery = new Gallery(inputName, inputSrc);
+const trello = new Trello();
 
-gallery.init(document.querySelector('.button'));
+Trello.renderDom();
+
+trello.events();
