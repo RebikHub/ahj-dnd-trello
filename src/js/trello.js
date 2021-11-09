@@ -1,41 +1,38 @@
-import Memory from './memory';
-
 export default class Trello {
-  constructor() {
+  constructor(storage) {
     this.todo = document.querySelector('.todo-in');
     this.progress = document.querySelector('.progress-in');
     this.done = document.querySelector('.done-in');
     this.addCardBtn = document.querySelectorAll('.add-card');
     this.card = document.querySelector('.card-block');
+    this.textArea = document.querySelector('.card-text');
     this.text = null;
+    this.storage = storage;
   }
 
   events() {
-    Trello.renderDom();
+    this.renderDom();
     this.addAnotherCard();
-    Trello.moveMouseRemoveDiv();
+    this.moveMouseRemoveDiv();
   }
 
-  static renderDom() {
-    const card = new Memory().load();
+  renderDom() {
+    const card = this.storage.load();
 
     if (card) {
       if (card.todo) {
-        const div = document.querySelector('.todo-in');
         card.todo.forEach((elem) => {
-          Trello.createNewDiv(div, elem);
+          Trello.createNewDiv(this.todo, elem);
         });
       }
       if (card.progress) {
-        const div = document.querySelector('.progress-in');
         card.progress.forEach((elem) => {
-          Trello.createNewDiv(div, elem);
+          Trello.createNewDiv(this.progress, elem);
         });
       }
       if (card.done) {
-        const div = document.querySelector('.done-in');
         card.done.forEach((elem) => {
-          Trello.createNewDiv(div, elem);
+          Trello.createNewDiv(this.done, elem);
         });
       }
     }
@@ -49,8 +46,8 @@ export default class Trello {
         cloneCard.classList.remove('none');
         i.closest('div').children[1].appendChild(cloneCard);
         i.classList.add('none');
-        Trello.inputText(cloneCard.children[0]);
-        Trello.addCardInDiv(cloneCard.children[1].children[0], i.closest('div').children[1], i, cloneCard);
+        this.inputText(cloneCard.children[0]);
+        this.addCardInDiv(cloneCard.children[1].children[0], i.closest('div').children[1], i, cloneCard);
         Trello.cancelAddCardInDiv(cloneCard.children[1].children[1], i, cloneCard);
       });
     }
@@ -68,19 +65,19 @@ export default class Trello {
     newDiv.appendChild(newDivRemove);
   }
 
-  static inputText(element) {
+  inputText(element) {
     element.addEventListener('input', (ev) => {
       this.text = ev.target.value;
     });
   }
 
-  static addCardInDiv(element, div, addLink, clone) {
+  addCardInDiv(element, div, addLink, clone) {
     element.addEventListener('click', () => {
       Trello.createNewDiv(div, this.text);
       clone.remove();
       addLink.classList.remove('none');
-      Trello.saveCards(div, this.text);
-      Trello.moveMouseRemoveDiv();
+      this.saveCards(div, this.text);
+      this.moveMouseRemoveDiv();
     });
   }
 
@@ -91,7 +88,7 @@ export default class Trello {
     });
   }
 
-  static moveMouseRemoveDiv() {
+  moveMouseRemoveDiv() {
     const divs = document.querySelectorAll('.new-div');
     for (const i of divs) {
       i.addEventListener('mouseover', () => {
@@ -108,39 +105,34 @@ export default class Trello {
     for (const i of divs) {
       i.children[0].addEventListener('click', () => {
         i.remove();
-        Trello.updateCards();
+        this.updateCards();
       });
     }
   }
 
-  static saveCards(element, text) {
-    const card = new Memory();
-    if (element.contains(document.querySelector('.todo-in'))) {
-      card.save({ todo: text });
-    } else if (element.contains(document.querySelector('.progress-in'))) {
-      card.save({ progress: text });
-    } else if (element.contains(document.querySelector('.done-in'))) {
-      card.save({ done: text });
+  saveCards(element, text) {
+    if (element.contains(this.todo)) {
+      this.storage.save({ todo: text });
+    } else if (element.contains(this.progress)) {
+      this.storage.save({ progress: text });
+    } else if (element.contains(this.done)) {
+      this.storage.save({ done: text });
     }
   }
 
-  static updateCards() {
-    const todo = document.querySelector('.todo-in');
-    const progress = document.querySelector('.progress-in');
-    const done = document.querySelector('.done-in');
-    const card = new Memory();
-    card.clear();
-    for (const i of todo.children) {
+  updateCards() {
+    this.storage.clear();
+    for (const i of this.todo.children) {
       const text = i.textContent;
-      card.save({ todo: text.slice(0, text.length - 1) });
+      this.storage.save({ todo: text.slice(0, text.length - 1) });
     }
-    for (const i of progress.children) {
+    for (const i of this.progress.children) {
       const text = i.textContent;
-      card.save({ progress: text.slice(0, text.length - 1) });
+      this.storage.save({ progress: text.slice(0, text.length - 1) });
     }
-    for (const i of done.children) {
+    for (const i of this.done.children) {
       const text = i.textContent;
-      card.save({ done: text.slice(0, text.length - 1) });
+      this.storage.save({ done: text.slice(0, text.length - 1) });
     }
   }
 }

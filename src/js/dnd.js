@@ -1,10 +1,11 @@
 import Trello from './trello';
 
 export default class DnD {
-  constructor() {
+  constructor(storage) {
     this.container = document.querySelector('#container');
     this.cloneEl = null;
     this.draggedEl = null;
+    this.storage = storage;
   }
 
   events() {
@@ -13,6 +14,10 @@ export default class DnD {
     this.dragMouseLeave(this.container);
     this.dropElement(this.container);
   }
+
+  //   textInputFocus() {
+
+  //   }
 
   dragMouseDown(element) {
     element.addEventListener('mousedown', (ev) => {

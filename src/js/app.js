@@ -1,10 +1,12 @@
+import Memory from './memory';
 import Trello from './trello';
 import DnD from './dnd';
 
 console.log('app started');
 
-const trello = new Trello();
-const dragged = new DnD();
+const storage = new Memory();
+const trello = new Trello(storage);
+const dragged = new DnD(storage);
 
 trello.events();
-// dragged.events();
+dragged.events();

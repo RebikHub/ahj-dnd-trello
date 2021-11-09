@@ -1,6 +1,9 @@
 export default class Memory {
   constructor() {
     this.storage = localStorage;
+    this.todo = todo;
+    this.progress = progress;
+    this.done = done;
   }
 
   save(object) {
@@ -34,5 +37,21 @@ export default class Memory {
 
   clear() {
     this.storage.removeItem('card');
+  }
+
+  updateCards() {
+    this.storage.clear();
+    for (const i of this.todo.children) {
+      const text = i.textContent;
+      this.storage.save({ todo: text.slice(0, text.length - 1) });
+    }
+    for (const i of this.progress.children) {
+      const text = i.textContent;
+      this.storage.save({ progress: text.slice(0, text.length - 1) });
+    }
+    for (const i of this.done.children) {
+      const text = i.textContent;
+      this.storage.save({ done: text.slice(0, text.length - 1) });
+    }
   }
 }
