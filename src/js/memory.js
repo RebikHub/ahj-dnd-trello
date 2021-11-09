@@ -31,4 +31,8 @@ export default class Memory {
       throw new Error(error);
     }
   }
+
+  clear() {
+    this.storage.removeItem('card');
+  }
 }

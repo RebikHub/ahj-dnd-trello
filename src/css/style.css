@@ -79,22 +79,23 @@ body {
 }
 
 .new-div {
-    position: relative;
+    display: flex;
     background-color: white;
     min-height: 20px;
     word-wrap: break-word;
-    padding: 5px 27px 5px 5px;
+    padding: 5px 5px 5px 5px;
     border-radius: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.new-div::before {
-    content: "\E951";
-    position: absolute;
+.new-div-remove {
     width: 18px;
     height: 18px;
     color: rgb(88, 88, 88);
-    background-color: rgb(174 174 174);
-    right: 5px;
+    background-color: rgb(222 219 219);
+    margin-left: auto;
+    font-size: larger;
+    text-align: center;
+    cursor: pointer;
 }
