@@ -44,7 +44,8 @@ export default class Trello {
         ev.preventDefault();
         const cloneCard = this.card.cloneNode(true);
         cloneCard.classList.remove('none');
-        i.closest('div').children[1].appendChild(cloneCard);
+        console.log(i.closest('div'));
+        i.closest('div').appendChild(cloneCard);
         i.classList.add('none');
         this.inputText(cloneCard.children[0]);
         this.addCardInDiv(cloneCard.children[1].children[0], i.closest('div').children[1], i, cloneCard);
@@ -105,7 +106,7 @@ export default class Trello {
     for (const i of divs) {
       i.children[0].addEventListener('click', () => {
         i.remove();
-        this.updateCards();
+        this.storage.updateCards(this.todo, this.progress, this.done);
       });
     }
   }
@@ -117,22 +118,6 @@ export default class Trello {
       this.storage.save({ progress: text });
     } else if (element.contains(this.done)) {
       this.storage.save({ done: text });
-    }
-  }
-
-  updateCards() {
-    this.storage.clear();
-    for (const i of this.todo.children) {
-      const text = i.textContent;
-      this.storage.save({ todo: text.slice(0, text.length - 1) });
-    }
-    for (const i of this.progress.children) {
-      const text = i.textContent;
-      this.storage.save({ progress: text.slice(0, text.length - 1) });
-    }
-    for (const i of this.done.children) {
-      const text = i.textContent;
-      this.storage.save({ done: text.slice(0, text.length - 1) });
     }
   }
 }
