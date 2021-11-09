@@ -11,6 +11,7 @@ export default class Trello {
   }
 
   events() {
+    Trello.renderDom();
     this.addAnotherCard();
     Trello.moveMouseRemoveDiv();
   }
@@ -50,6 +51,7 @@ export default class Trello {
         i.classList.add('none');
         Trello.inputText(cloneCard.children[0]);
         Trello.addCardInDiv(cloneCard.children[1].children[0], i.closest('div').children[1], i, cloneCard);
+        Trello.cancelAddCardInDiv(cloneCard.children[1].children[1], i, cloneCard);
       });
     }
   }
@@ -74,11 +76,18 @@ export default class Trello {
 
   static addCardInDiv(element, div, addLink, clone) {
     element.addEventListener('click', () => {
+      Trello.createNewDiv(div, this.text);
       clone.remove();
       addLink.classList.remove('none');
-      Trello.createNewDiv(div, this.text);
       Trello.saveCards(div, this.text);
       Trello.moveMouseRemoveDiv();
+    });
+  }
+
+  static cancelAddCardInDiv(element, addLink, clone) {
+    element.addEventListener('click', () => {
+      clone.remove();
+      addLink.classList.remove('none');
     });
   }
 
