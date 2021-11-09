@@ -8,6 +8,10 @@ export default class DnD {
     this.cloneEl = null;
     this.draggedEl = null;
     this.storage = storage;
+    this.grabX = null;
+    this.grabY = null;
+    this.osX = null;
+    this.osY = null;
   }
 
   events() {
@@ -27,10 +31,15 @@ export default class DnD {
         this.draggedEl = ev.target;
         this.cloneEl = ev.target.cloneNode(true);
         this.cloneEl.classList.add('dragged');
-        this.container.style = 'cursor: grabbing';
+        this.draggedEl.classList.add('opacity');
         document.body.appendChild(this.cloneEl);
-        this.cloneEl.style.left = `${ev.pageX - this.cloneEl.offsetWidth / 2}px`;
-        this.cloneEl.style.top = `${ev.pageY - this.cloneEl.offsetHeight / 2}px`;
+        document.body.style.cursor = 'grabbing';
+        this.grabX = ev.pageX;
+        this.grabY = ev.pageY;
+        this.osX = this.draggedEl.offsetLeft;
+        this.osY = this.draggedEl.offsetTop;
+        this.cloneEl.style.left = `${this.draggedEl.offsetLeft}px`;
+        this.cloneEl.style.top = `${this.draggedEl.offsetTop}px`;
       });
     }
   }
@@ -41,8 +50,18 @@ export default class DnD {
       if (!this.draggedEl) {
         return;
       }
-      this.cloneEl.style.left = `${ev.pageX - this.cloneEl.offsetWidth / 2}px`;
-      this.cloneEl.style.top = `${ev.pageY - this.cloneEl.offsetHeight / 2}px`;
+      const closest = document.elementFromPoint(ev.clientX, ev.clientY);
+
+      if (closest.parentElement.classList.contains('dnd-in')) {
+        this.draggedEl.classList.add('opacity');
+        if ((ev.clientY - (closest.offsetTop + (closest.offsetHeight / 2))) < 0) {
+          closest.parentElement.insertBefore(this.draggedEl, closest);
+        } else {
+          closest.parentElement.insertBefore(this.draggedEl, closest.nextSibling);
+        }
+      }
+      this.cloneEl.style.left = `${ev.pageX - (this.grabX - this.osX)}px`;
+      this.cloneEl.style.top = `${ev.pageY - (this.grabY - this.osY)}px`;
     });
   }
 
@@ -51,6 +70,7 @@ export default class DnD {
       if (!this.draggedEl) {
         return;
       }
+      this.draggedEl.classList.remove('opacity');
       document.body.removeChild(this.cloneEl);
       this.cloneEl = null;
       this.draggedEl = null;
@@ -63,17 +83,14 @@ export default class DnD {
         return;
       }
       const closest = document.elementFromPoint(ev.clientX, ev.clientY);
-      if (closest.parentElement.classList.contains('todo-in')) {
+      if (closest.parentElement.classList.contains('dnd-in')) {
         closest.parentElement.insertBefore(this.draggedEl, closest);
-      } else if (closest.parentElement.classList.contains('progress-in')) {
-        closest.parentElement.insertBefore(this.draggedEl, closest);
-      } else if (closest.parentElement.classList.contains('done-in')) {
-        closest.parentElement.insertBefore(this.draggedEl, closest);
-      // } else {
-      //   closest.parentElement.insertBefore(this.draggedEl, closest);
+      } else if (closest.classList.contains('dnd-in')) {
+        closest.appendChild(this.draggedEl);
       }
       document.body.removeChild(this.cloneEl);
-      this.container.style = '';
+      document.body.style = '';
+      this.draggedEl.classList.remove('opacity');
       this.cloneEl = null;
       this.draggedEl = null;
       this.storage.updateCards(this.todo, this.progress, this.done);

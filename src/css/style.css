@@ -80,11 +80,11 @@ body {
     background-image: url(../img/remove.png);
     border-style: none;
     background-color: rgb(77, 200, 231);
-    /* background-color: rgb(45, 187, 223); */
 }
 
 .new-div {
     display: flex;
+    flex-flow: column-reverse;
     background-color: white;
     min-height: 20px;
     word-wrap: break-word;
@@ -120,4 +120,9 @@ body {
     position: absolute;
     pointer-events: none;
     background: #fff;
+    cursor: 'grabbing';
+}
+
+.opacity {
+    opacity: 0;
 }

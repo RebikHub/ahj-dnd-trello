@@ -44,7 +44,6 @@ export default class Trello {
         ev.preventDefault();
         const cloneCard = this.card.cloneNode(true);
         cloneCard.classList.remove('none');
-        console.log(i.closest('div'));
         i.closest('div').appendChild(cloneCard);
         i.classList.add('none');
         this.inputText(cloneCard.children[0]);
