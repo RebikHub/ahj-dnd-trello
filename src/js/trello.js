@@ -22,17 +22,17 @@ export default class Trello {
     if (card) {
       if (card.todo) {
         card.todo.forEach((elem) => {
-          this.createNewDiv(this.todo, elem);
+          Trello.createNewDiv(this.todo, elem);
         });
       }
       if (card.progress) {
         card.progress.forEach((elem) => {
-          this.createNewDiv(this.progress, elem);
+          Trello.createNewDiv(this.progress, elem);
         });
       }
       if (card.done) {
         card.done.forEach((elem) => {
-          this.createNewDiv(this.done, elem);
+          Trello.createNewDiv(this.done, elem);
         });
       }
     }
@@ -53,11 +53,10 @@ export default class Trello {
     }
   }
 
-  createNewDiv(div, elem) {
+  static createNewDiv(div, elem) {
     if (elem === null) return;
     const newDiv = document.createElement('div');
     newDiv.textContent = elem;
-    if (this.text !== null) this.text = null;
     newDiv.classList.add('new-div');
     div.appendChild(newDiv);
     const newDivRemove = document.createElement('span');
@@ -75,7 +74,7 @@ export default class Trello {
 
   addCardInDiv(element, div, addLink, clone) {
     element.addEventListener('click', () => {
-      this.createNewDiv(div, this.text);
+      Trello.createNewDiv(div, this.text);
       clone.remove();
       addLink.classList.remove('none');
       this.saveCards(div, this.text);
@@ -120,5 +119,6 @@ export default class Trello {
     } else if (element.contains(this.done)) {
       this.storage.save({ done: text });
     }
+    if (this.text !== null) this.text = null;
   }
 }
