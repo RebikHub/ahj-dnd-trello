@@ -54,6 +54,7 @@ export default class Trello {
   }
 
   createNewDiv(div, elem) {
+    if (elem === null) return;
     const newDiv = document.createElement('div');
     newDiv.textContent = elem;
     if (this.text !== null) this.text = null;
